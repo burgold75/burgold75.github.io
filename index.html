@@ -2,10 +2,664 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Burgold Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>버드네 SOFT</title>
+    <meta name="description" content="홈페이지 제작부터 서버 운영, SSL 보안, SEO 등록, 유지관리까지 함께 제공하는 관리형 웹서비스 전문 기업입니다.">
+    <style>
+        *{  margin:0;padding:0;box-sizing:border-box; }
+        body{ font-family:Arial, Helvetica, sans-serif;background:#0f172a;color:#ffffff;line-height:1.7; }
+        a{ text-decoration:none;color:inherit; }
+        .wrapper{  width:100%; }
+        header { position:fixed; top:0; left:0; width:100%; z-index:1000; border-bottom:1px solid rgba(255,255,255,0.08); background:#111827; }
+		.header-inner { width:100%; margin:0 auto; padding:10px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:nowrap; position:relative; }
+        .logo{ font-size:28px;font-weight:bold;letter-spacing:1px; }
+		.logo { flex:0 0 auto; }
+		.logo a { display:flex; align-items:center; gap:10px; white-space:nowrap; }
+		.logo img { width:70px; height:auto; flex-shrink:0; }
+		.logo h2 { margin:0; white-space:nowrap; }
+		.main-nav { display:flex; align-items:center; gap:25px; margin-left:auto; }
+		.main-nav a { color:#d1d5db; transition:color 0.25s ease; }
+		.main-nav a:hover { color:#fff; }
+		.main-nav a.active { color:#55c7e8; text-shadow:0 0 12px rgba(85,199,232,0.6); }
+		.menu-toggle { display:none; width:42px; height:42px; padding:8px; border:0; background:transparent; cursor:pointer; }
+		.menu-toggle { display:none; flex:0 0 auto; margin-left:auto; }
+		.menu-toggle span { display:block; width:100%; height:2px; margin:6px 0; background:#fff; transition:0.3s; }
+		.menu-toggle.active span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+		.menu-toggle.active span:nth-child(2) { opacity:0; }
+		.menu-toggle.active span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+        nav{ display:flex;gap:25px; }
+        nav a{ color:#d1d5db;transition:0.2s; }
+        nav a:hover{ color:#ffffff; }
+
+		/*
+		.main-banner{position:relative; margin-top:90px; width:100%; height:102vh; overflow:hidden; background:#000;}
+		.main-banner iframe{position:absolute; top:50%; left:50%; width:100vw; height:56.25vw; min-width:177.78vh; min-height:100vh; transform:translate(-50%,-50%); border:0;}
+		*/
+		.main-banner { position:relative;margin-top:90px;width:100%;aspect-ratio:16 / 9;overflow:hidden;background:#000; }
+		.hero-content { position:absolute;z-index:100;top:20%;left:15%; }
+		.main-banner iframe { position:absolute;top:0;left:0;width:100%;height:100%;border:0; }
+
+		.section{ max-width:1200px; margin:0 auto; padding:80px 20px; }
+		.section-title{ font-size:38px; margin-bottom:20px; text-align:center; }
+		.section-desc{text-align:center; color:#cbd5e1; margin-bottom:50px;}
+		.service-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:25px;}
+		.service-box{background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:35px 25px;}
+		.service-box h3{margin-bottom:15px; font-size:24px;}
+		.service-box p{color:#cbd5e1; font-size:15px;}
+		.feature-list{margin-top:20px; padding-left:20px;}
+		.feature-list li{margin-bottom:10px; color:#dbeafe;}
+		.contact{text-align:center; background:#111827; border-top:1px solid rgba(255,255,255,0.08); padding:80px 20px;}
+		.contact h2{font-size:38px; margin-bottom:20px;}
+		.contact p{color:#cbd5e1; margin-bottom:30px;}
+		.contact-btn{display:inline-block; padding:15px 35px; border-radius:10px; background:#2563eb; font-weight:bold;}
+		footer{text-align:center; padding:30px 20px; color:#94a3b8; font-size:14px; border-top:1px solid rgba(255,255,255,0.08);}
+		.hero-title { margin:0; font-size:clamp(42px,6vw,82px); line-height:1.12; font-weight:800; letter-spacing:-0.035em; color:#fff; }
+		.hero-shimmer { display:inline-block; background:linear-gradient(100deg,#0057ff 0%,#ffffff 35%,#8be9fd 55%,#ffffff 75%,#0057ff 100%); background-size:250% 100%; background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:budneShimmer 6s linear infinite; }
+
+		.hero-desc { margin:32px 0 0; max-width:680px; font-size:19px; line-height:1.75; font-weight:400; color:#FFFFFF; letter-spacing:-0.01em; text-wrap:pretty; }
+		.hero-actions { display:flex; gap:14px; margin-top:42px; align-items:center; }
+		.hero-btn { display:inline-flex; align-items:center; justify-content:center; padding:16px 34px; border-radius:100px; font-size:16px; font-weight:700; text-decoration:none; transition:transform 0.25s ease,background 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease; }
+
+		/* 프로젝트 문의하기 */
+		.hero-btn-primary { color:#fff; background:#0066ff; border:1px solid #0066ff; box-shadow:0 8px 30px rgba(0,102,255,0.25); }
+		.hero-btn-primary:hover { background:#0088ff; border-color:#0088ff; transform:translateY(-3px); box-shadow:0 12px 35px rgba(0,102,255,0.4); }
+
+		/* 포트폴리오 */
+		.hero-btn-secondary { color:#e8ecef; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.22); }
+		.hero-btn-secondary:hover { color:#fff; border-color:#0088ff; background:rgba(0,102,255,0.1); transform:translateY(-3px); }
+		
+		/* tech-marquee */
+		.tech-marquee { overflow:hidden; border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); padding:20px 0; background:#0d1116; }
+		.tech-marquee-track { display:flex; width:max-content; white-space:nowrap; will-change:transform; }
+		.tech-marquee-group { display:flex; align-items:center; gap:52px; padding-right:52px; }
+		.tech-marquee-group span { display:flex; align-items:center; gap:52px; font-size:15px; font-weight:700; letter-spacing:0.15em; color:#6f7f8c; }
+		.tech-marquee-group i { display:inline-block; width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:#55c7e8; }
+
+		/*업력*/
+		.stats-section { border-top:1px solid rgba(255,255,255,0.07); border-bottom:1px solid rgba(255,255,255,0.07); }
+		.stats-grid { max-width:1240px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); }
+		.stat-item { padding:44px 32px; border-right:1px solid rgba(255,255,255,0.07); }
+		.stat-item:last-child { border-right:0; }
+		.stat-value { display:flex; align-items:baseline; }
+		.stat-num { font-size:52px; font-weight:800; letter-spacing:-0.03em; color:#e8ecef; }
+		.stat-unit { margin-left:5px; font-size:24px; font-weight:700; color:#7fd4e8; }
+		.stat-label { margin-top:8px; font-size:14px; line-height:1.6; color:#8a98a4; }
+		@media(max-width:900px) {
+			.stats-grid { grid-template-columns:repeat(2,1fr); }
+			.stat-item { border-bottom:1px solid rgba(255,255,255,0.07); }
+		}
+		@media(max-width:600px) {
+			/*.stats-grid { grid-template-columns:1fr; }*/
+			.stat-item { padding:30px 24px; border-right:0; }
+			.stat-num { font-size:44px; }
+		}
+		/* strength-section */
+		.strength-section { padding:140px 48px; background:#0d1116; }
+		.strength-grid { max-width:1240px; margin:0 auto; display:grid; grid-template-columns:1fr 1.2fr; gap:80px; align-items:start; }
+		.strength-sticky { position:sticky; top:120px; }
+		.section-eyebrow { margin:0 0 16px; font-size:14px; font-weight:600; letter-spacing:0.18em; color:#7fd4e8; }
+		.section-eyebrow span { color:#5b6a76; }
+		.strength-sticky h2 { margin:0; font-size:clamp(34px,4vw,52px); font-weight:800; letter-spacing:-0.03em; line-height:1.2; }
+		.strength-intro { margin:28px 0 0; font-size:17px; line-height:1.75; color:#aeb9c2; text-wrap:pretty; }
+		.strength-list { display:flex; flex-direction:column; gap:16px; }
+		.strength-card { padding:36px 40px; background:#10151b; border:1px solid rgba(232,236,239,0.07); border-radius:16px; }
+		.strength-card h3 { margin:0 0 12px; font-size:21px; font-weight:700; letter-spacing:-0.02em; color:#e8ecef; }
+		.strength-card p { margin:0; font-size:16px; line-height:1.7; color:#aeb9c2; text-wrap:pretty; }
+
+		@media(max-width:900px) {
+			.strength-section {
+				padding:100px 24px;
+			}
+
+			.strength-grid {
+				grid-template-columns:1fr;
+				gap:48px;
+			}
+
+			.strength-sticky {
+				position:static;
+			}
+		}
+
+		@media(max-width:600px) {
+			.strength-section {
+				padding:80px 20px;
+			}
+
+			.strength-card {
+				padding:28px 24px;
+			}
+		}
+		/*process*/
+		.process-section { padding:140px 48px; }
+		.process-inner { max-width:1240px; margin:0 auto; }
+		.process-title { margin:0 0 64px; font-size:clamp(34px,4vw,52px); font-weight:800; letter-spacing:-0.03em; }
+		.process-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+		.process-item { padding:28px 24px; border-top:2px solid rgba(127,212,232,0.5); }
+		.process-num { font-size:64px; font-weight:800; line-height:1; margin-bottom:18px; color:transparent; -webkit-text-stroke:1px rgba(127,212,232,0.45); }
+		.process-item h3 { margin:0 0 10px; font-size:19px; font-weight:700; letter-spacing:-0.01em; }
+		.process-item p { margin:0; font-size:14px; line-height:1.65; color:#8a98a4; text-wrap:pretty; }
+		@media(max-width:1000px) {
+			.process-grid { grid-template-columns:repeat(3,1fr); }
+		}
+		@media(max-width:700px) {
+			.process-section { padding:100px 24px; }
+			.process-grid { grid-template-columns:repeat(2,1fr); }
+		}
+		@media(max-width:480px) {
+			.process-section { padding:80px 20px; }
+			.process-title { margin-bottom:40px; font-size:32px; }
+			.process-grid { grid-template-columns:1fr; gap:28px; }
+			.process-num { font-size:52px; }
+		}
+		/*색상변경*/
+		@keyframes budneShimmer {
+			0% {
+				background-position: 200% 50%;
+			}
+
+			100% {
+				background-position: -50% 50%;
+			}
+		}
+
+		/*basic mobile*/
+		@media(max-width:1024px) {
+			.hero-content { top:15%;left:10%; }
+		}
+		@media(max-width:850px) {
+			.header-inner {width:100%;padding:10px 20px;display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-between;align-items:center; position:relative;	}
+			.logo {margin:0;	flex:0 0 auto;}
+			.logo img {width:58px;}
+			.logo h2 {	font-size:23px;	white-space:nowrap;}
+			.menu-toggle { display:block;flex:0 0 42px;margin-left:auto; }
+			.main-nav {position:absolute;top:calc(100% + 8px);right:20px;left:auto;width:max-content;min-width:150px;display:none;
+				flex-direction:column;align-items:stretch;gap:0;margin:0;	padding:8px;
+				background:#111827;border:1px solid rgba(255,255,255,0.08);border-radius:12px;box-shadow:0 12px 35px rgba(0,0,0,0.35);
+			}
+			.main-nav.active {display:flex;}
+			.main-nav a { display:block;padding:10px 16px;white-space:nowrap;border-radius:8px;color:#d1d5db;	}
+			.main-nav a:hover { color:#fff;	background:rgba(255,255,255,0.06); }
+			/*.main-banner { margin-top: 60px; height: 122vh; }*/
+		}
+		@media(max-width:768px){
+			/*
+			.header-inner{flex-direction:column; gap:20px;}
+			nav{flex-wrap:wrap; justify-content:center;}
+			.section-title{font-size:30px;}
+			*/
+		}
+		@media(max-width:480px) {
+			.hero-title { font-size:28px; }
+			.hero-content { top:15%;left:5%; }
+			.hero-desc { margin: 20px 0 0; font-size:12px; }	
+			.hero-actions { margin-top: 5px; }
+			.hero-btn { padding: 7px 14px; }
+		}
+
+		@media(max-width:360px) {
+			.hero-title { font-size:20px; }
+		}
+    </style>
 </head>
 <body>
-    <h1>Burgold Portfolio</h1>
-    <p>GitHub Pages Test</p>
+
+<div class="wrapper">
+	<header>
+		<div class="header-inner">
+			<div class="logo">
+				<a href="/">
+					<img src="/logo.png" alt="버드네 SOFT">
+					<h2>버드네 SOFT</h2>
+				</a>
+			</div>
+			<button class="menu-toggle" type="button" aria-label="메뉴 열기">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+			<nav class="main-nav">
+				<a href="#services">Services</a>
+				<a href="#strength">Strengths</a>
+				<a href="#process">Process</a>
+				<a href="#portfolio">Portfolio</a>
+				<a href="#skills">Skills</a>
+				<a href="#contact">Contact</a>
+			</nav>
+		</div>
+	</header>
+
+	<section class="main-banner">
+		<iframe
+			src="https://www.youtube.com/embed/ZgcGDvY90CY?autoplay=1&mute=1&controls=1&playsinline=1"
+			title="Main Banner Video" 	allow="autoplay; encrypted-media" allowfullscreen>
+		</iframe><!--ZgcGDvY90CY-->
+		<div class="hero-content">
+			<h1 class="hero-title">
+				웹을 넘어, 비즈니스 시스템까지
+				<br>
+				<span class="hero-shimmer">
+					필요한 기술을 하나로 연결합니다
+				</span>
+			</h1>
+			<p class="hero-desc">
+				웹사이트부터 ERP · 재고 · 주문 · 정산 · 물류까지 —
+				기업의 업무 흐름에 맞는 시스템을 설계하고 구축합니다.
+				API 연동 · 업무 자동화 · 서버 운영까지, 버드네 SOFT가 함께합니다.
+			</p>
+			<div class="hero-actions">
+				<a href="#contact" class="hero-btn hero-btn-primary">
+					프로젝트 문의하기
+				</a>
+
+				<a href="#portfolio" class="hero-btn hero-btn-secondary">
+					포트폴리오 보기
+				</a>
+			</div>
+		</div>
+	</section>
+	<div class="tech-marquee">
+		<div class="tech-marquee-track" id="techMarquee">
+			<div class="tech-marquee-group">
+				<span>WEB DEVELOPMENT<i></i></span>
+				<span>ERP INTEGRATION<i></i></span>
+				<span>REAL-TIME INVENTORY<i></i></span>
+				<span>B2B COMMERCE<i></i></span>
+				<span>SERVER & API<i></i></span>
+				<span>PAYMENT SYSTEM<i></i></span>
+				<span>SEO & AI<i></i></span>
+				<span>DEVELOPMENT TO OPERATION<i></i></span>
+			</div>
+		</div>
+	</div>
+
+	<section class="stats-section">
+		<div class="stats-grid">
+
+			<div class="stat-item">
+				<div class="stat-value">
+					<span class="stat-num" data-count="10">0</span>
+					<span class="stat-unit">년+</span>
+				</div>
+				<div class="stat-label">웹 개발 · 서버 운영 실무 경험</div>
+			</div>
+
+			<div class="stat-item">
+				<div class="stat-value">
+					<span class="stat-num" data-count="50">0</span>
+					<span class="stat-unit">대+</span>
+				</div>
+				<div class="stat-label">웹 · 미디어 · 서비스 서버 운영 경험</div>
+			</div>
+
+			<div class="stat-item">
+				<div class="stat-value">
+					<span class="stat-num" data-count="9">0</span>
+					<span class="stat-unit">+</span>
+				</div>
+				<div class="stat-label">ERP · 재고 · 결제 · 물류 API 연동 영역</div>
+			</div>
+
+			<div class="stat-item">
+				<div class="stat-value">
+					<span class="stat-num" data-count="1">0</span>
+					<span class="stat-unit">FLOW</span>
+				</div>
+				<div class="stat-label">기획부터 개발 · 서버 · 운영까지 일원화</div>
+			</div>
+
+		</div>
+	</section>
+
+	<section id="services" class="section">
+		<p class="section-eyebrow">
+			<span>01</span> — OUR SERVICES
+		</p>
+		<h2 class="section-title">
+			비즈니스에 필요한 웹 시스템을<br>
+			구축하고 연결합니다
+		</h2>
+		<p class="section-desc">
+			웹사이트 구축부터 기업 시스템 연동, 서버 운영까지 하나의 흐름으로 제공합니다.
+		</p>
+		<div class="service-grid">
+
+			<div class="service-box">
+				<h3>Web Development</h3>
+
+				<p>
+					기업 홈페이지부터 쇼핑몰,
+					B2B 웹서비스까지 목적에 맞게 구축합니다.
+				</p>
+
+				<ul class="feature-list">
+					<li>기업 홈페이지 · 쇼핑몰</li>
+					<li>반응형 웹 · 관리자 시스템</li>
+					<li>Laravel · PHP 기반 개발</li>
+				</ul>
+			</div>
+
+			<div class="service-box">
+				<h3>Business System Integration</h3>
+
+				<p>
+					기존 ERP와 재고, 회원, 거래처 시스템을
+					웹서비스와 연결합니다.
+				</p>
+
+				<ul class="feature-list">
+					<li>ERP · 재고 실시간 연동</li>
+					<li>회원등급 · 거래처별 공급가</li>
+					<li>B2B 견적 · 자동발주</li>
+				</ul>
+			</div>
+
+			<div class="service-box">
+				<h3>API & Server</h3>
+
+				<p>
+					결제와 물류 API부터 서버 구축까지
+					서비스 운영에 필요한 환경을 구성합니다.
+				</p>
+
+				<ul class="feature-list">
+					<li>결제 · 물류 API 연동</li>
+					<li>Linux · Nginx 서버 구축</li>
+					<li>SSL · 백업 · 장애 대응</li>
+				</ul>
+			</div>
+
+			<div class="service-box">
+				<h3>Operation & SEO</h3>
+
+				<p>
+					개발 완료 후에도 서비스 운영과
+					검색 최적화를 지속적으로 지원합니다.
+				</p>
+
+				<ul class="feature-list">
+					<li>웹사이트 유지보수</li>
+					<li>Google · Naver SEO</li>
+					<li>운영 자동화 · AI 활용</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</section>
+
+	<section id="strength" class="section strength-section">
+		<div class="strength-grid">
+
+			<div class="strength-sticky">
+				<p class="section-eyebrow">
+					<span>02</span> — WHY BUDNE SOFT
+				</p>
+
+				<h2>
+					개발부터 운영까지<br>
+					한 흐름으로 연결합니다
+				</h2>
+
+				<p class="strength-intro">
+					웹사이트만 만드는 것이 아니라 서버, 데이터, 외부 시스템 연동,
+					운영까지 전체 구조를 함께 봅니다.
+					서비스가 실제 업무에서 안정적으로 동작하는 것을 목표로 개발합니다.
+				</p>
+			</div>
+
+			<div class="strength-list">
+
+				<div class="strength-card">
+					<h3>개발과 서버를 함께 이해합니다</h3>
+					<p>
+						화면 개발만 하고 끝내지 않습니다.
+						Linux, Nginx, 데이터베이스, SSL, 백업과 장애 대응까지
+						실제 서비스 운영 환경을 고려해 구축합니다.
+					</p>
+				</div>
+
+				<div class="strength-card">
+					<h3>기존 업무 시스템과 연결합니다</h3>
+					<p>
+						ERP, 재고, 회원, 거래처별 공급가, 결제, 물류 API 등
+						이미 사용 중인 시스템을 웹서비스와 연결해
+						반복 업무를 줄이고 데이터 흐름을 자동화합니다.
+					</p>
+				</div>
+
+				<div class="strength-card">
+					<h3>구축 이후 운영까지 대응합니다</h3>
+					<p>
+						오픈 이후 발생하는 수정, 기능 추가, 서버 관리,
+						검색 최적화와 운영 이슈까지 이어서 대응합니다.
+						개발과 운영을 분리하지 않고 지속적으로 관리합니다.
+					</p>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+	<section id="process" class="section process-section">
+		<div class="process-inner">
+
+			<p class="section-eyebrow">
+				<span>03</span> — PROCESS
+			</p>
+
+			<h2 class="process-title">
+				프로젝트 진행 방식
+			</h2>
+
+			<div class="process-grid">
+
+				<div class="process-item">
+					<div class="process-num">1</div>
+
+					<h3>상담 · 요구 분석</h3>
+
+					<p>
+						필요한 기능과 현재 업무 흐름을 확인하고
+						개발 범위와 우선순위를 정리합니다.
+					</p>
+				</div>
+
+				<div class="process-item">
+					<div class="process-num">2</div>
+
+					<h3>구조 설계</h3>
+
+					<p>
+						화면, 데이터베이스, 서버와 외부 시스템 연동까지
+						전체 구조를 설계합니다.
+					</p>
+				</div>
+
+				<div class="process-item">
+					<div class="process-num">3</div>
+
+					<h3>개발 · 연동</h3>
+
+					<p>
+						웹 기능을 구현하고 ERP, 재고, 결제,
+						물류 API 등 필요한 시스템을 연결합니다.
+					</p>
+				</div>
+
+				<div class="process-item">
+					<div class="process-num">4</div>
+
+					<h3>테스트 · 배포</h3>
+
+					<p>
+						기능과 연동 상태를 점검한 뒤
+						실제 운영 서버에 안정적으로 배포합니다.
+					</p>
+				</div>
+
+				<div class="process-item">
+					<div class="process-num">5</div>
+
+					<h3>운영 · 유지보수</h3>
+
+					<p>
+						오픈 이후 서버 관리, 기능 개선,
+						장애 대응과 지속적인 유지보수를 지원합니다.
+					</p>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+    <section  id="contact" class="contact">
+
+        <h2>
+            Start Your Business Website
+        </h2>
+
+        <p>
+            홈페이지 제작부터 서버 운영까지 함께합니다.
+        </p>
+
+        <a href="#" class="contact-btn">
+            Contact Us
+        </a>
+
+    </section>
+
+    <footer>
+        © 2026 YOUR COMPANY. All Rights Reserved.
+    </footer>
+
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const marquee = document.getElementById('techMarquee');
+    const group = marquee.querySelector('.tech-marquee-group');
+
+    const clone = group.cloneNode(true);
+    marquee.appendChild(clone);
+
+    let position = 0;
+    const speed = 0.6;
+
+    function animateMarquee() {
+
+        position -= speed;
+
+        if (Math.abs(position) >= group.offsetWidth) {
+            position = 0;
+        }
+
+        marquee.style.transform = `translateX(${position}px)`;
+
+        requestAnimationFrame(animateMarquee);
+    }
+
+    animateMarquee();
+
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const counters = document.querySelectorAll('.stat-num');
+
+    const observer = new IntersectionObserver(entries => {
+
+        entries.forEach(entry => {
+
+            if (!entry.isIntersecting) return;
+
+            const el = entry.target;
+            const target = Number(el.dataset.count);
+
+            let current = 0;
+            const duration = 1200;
+            const start = performance.now();
+
+            function update(now) {
+
+                const progress = Math.min((now - start) / duration, 1);
+
+                current = Math.floor(target * progress);
+
+                el.textContent = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target;
+                }
+            }
+
+            requestAnimationFrame(update);
+            observer.unobserve(el);
+        });
+
+    }, {
+        threshold: 0.4
+    });
+
+    counters.forEach(counter => observer.observe(counter));
+
+});
+document.addEventListener('DOMContentLoaded', function () {
+
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.main-nav');
+
+	toggle.addEventListener('click', function () {
+		toggle.classList.toggle('active');
+		nav.classList.toggle('active');
+	});	
+	nav.querySelectorAll('a').forEach(function (link) {
+		link.addEventListener('click', function () {
+			toggle.classList.remove('active');
+			nav.classList.remove('active');
+		});
+
+	});
+});
+document.addEventListener('DOMContentLoaded', function () {
+	const menuLinks = document.querySelectorAll('.main-nav a[href^="#"]');
+	const sections = document.querySelectorAll('section[id]');
+
+	function updateActiveMenu() {
+
+		const scrollPosition = window.scrollY + 180;
+		let currentSection = '';
+
+		sections.forEach(function(section) {
+
+			const sectionTop = section.offsetTop;
+			const sectionBottom = sectionTop + section.offsetHeight;
+
+			if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+				currentSection = section.id;
+			}
+
+		});
+
+		menuLinks.forEach(function(link) {
+
+			link.classList.remove('active');
+
+			if (link.getAttribute('href') === '#' + currentSection) {
+				link.classList.add('active');
+			}
+
+		});
+
+	}
+
+	window.addEventListener('scroll', updateActiveMenu);
+	updateActiveMenu();
+});
+</script>
 </body>
 </html>
